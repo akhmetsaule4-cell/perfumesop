@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Стандарт продавца | Парфюм</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: #f8f6f2;
+      color: #1e1e1e;
+      padding: 10px 8px 30px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      max-width: 960px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      padding: 16px 12px 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    }
+
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 3px solid #e0c9b5;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .header-top h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0b1a2b;
+      border: none;
+      padding: 0;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .header-top h1 small {
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: #5f5f5f;
+      background: #efe7df;
+      padding: 2px 10px;
+      border-radius: 40px;
+      display: inline-block;
+      margin-left: 4px;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 4px;
+      background: #f0ebe5;
+      border-radius: 40px;
+      padding: 3px;
+    }
+    .lang-btn {
+      border: none;
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+      background: transparent;
+      color: #5f4f3f;
+      touch-action: manipulation;
+    }
+    .lang-btn.active {
+      background: #1e2e3e;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .lang-btn:active {
+      transform: scale(0.95);
+    }
+
+    .badge-contacts {
+      background: #f2eee9;
+      padding: 10px 14px;
+      border-radius: 60px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px 10px;
+      font-weight: 500;
+      border: 1px dashed #b6a392;
+      font-size: 0.85rem;
+    }
+    .badge-contacts span {
+      background: white;
+      padding: 3px 12px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+    }
+    .badge-contacts a {
+      color: #1f3a4b;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .work-time {
+      background: #1e2e3e;
+      color: white;
+      padding: 3px 14px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .work-time-kz {
+      background: #3d2f23;
+      color: #f0ebe5;
+      padding: 3px 14px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 3px;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #ded6cd;
+      padding-bottom: 6px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 10px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      border-radius: 40px;
+      color: #3d3d3d;
+      cursor: pointer;
+      transition: 0.2s;
+      background: #f0ebe5;
+      flex: 1 0 auto;
+      text-align: center;
+      min-width: 50px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1.2;
+    }
+    .tab-btn.active {
+      background: #1e2e3e;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,20,30,0.1);
+    }
+    .tab-btn:not(.active):hover {
+      background: #e3dbd1;
+    }
+    .tab-btn:active {
+      transform: scale(0.95);
+    }
+
+    .tab-content {
+      display: block;
+      animation: fade 0.2s ease;
+    }
+    .tab-content.hidden {
+      display: none;
+    }
+
+    @keyframes fade {
+      0% { opacity: 0.4; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: #fcfaf8;
+      border-radius: 18px;
+      padding: 14px 12px;
+      margin-bottom: 14px;
+      border: 1px solid #ece5dd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .card h3 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #1b2a38;
+      flex-wrap: wrap;
+    }
+    .card h3 span {
+      background: #d6c9bd;
+      color: #1e1e1e;
+      border-radius: 40px;
+      padding: 0 10px;
+      font-size: 0.65rem;
+      font-weight: 500;
+    }
+    .card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 10px 0 4px;
+      color: #2a3a48;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+      margin: 6px 0 10px;
+    }
+    li {
+      margin-bottom: 6px;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    @media (max-width: 540px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+
+    .accent-bg {
+      background: #f2ece5;
+      border-radius: 12px;
+      padding: 10px 14px;
+    }
+
+    .script-box {
+      background: #e8e0d7;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin: 8px 0;
+      border-left: 5px solid #9b897b;
+    }
+    .script-box strong {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+    .script-box p {
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+    }
+
+    .pill {
+      background: #dacfc4;
+      border-radius: 60px;
+      padding: 2px 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #222;
+      display: inline-block;
+      margin: 2px 2px 2px 0;
+    }
+
+    .pill-gold {
+      background: #d4a84b;
+      color: white;
+      border-radius: 60px;
+      padding: 2px 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .pill-green {
+      background: #2a7a4a;
+      color: white;
+      border-radius: 60px;
+      padding: 2px 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .fragrance-card {
+      background: #f5f0ea;
+      border-radius: 14px;
+      padding: 12px 14px;
+      border-left: 4px solid #b6a392;
+      margin-bottom: 8px;
+    }
+    .fragrance-card strong {
+      font-size: 1rem;
+      color: #1f2e3c;
+    }
+    .fragrance-card .notes {
+      font-size: 0.85rem;
+      color: #4d3f33;
+      margin: 3px 0;
+    }
+    .fragrance-card .for {
+      font-size: 0.8rem;
+      color: #5f4f3f;
+      background: #e5ddd4;
+      padding: 2px 12px;
+      border-radius: 30px;
+      display: inline-block;
+    }
+
+    .offer-box {
+      background: #1e2e3e;
+      color: white;
+      border-radius: 16px;
+      padding: 14px 16px;
+      text-align: center;
+      margin: 10px 0;
+    }
+    .offer-box .big {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .offer-box .small {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .gift-box {
+      background: #d4a84b20;
+      border: 2px solid #d4a84b;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin: 8px 0;
+    }
+    .gift-box strong {
+      color: #8a6a2a;
+    }
+
+    .bonus-box {
+      background: #2a7a4a15;
+      border: 2px solid #2a7a4a;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin: 8px 0;
+    }
+    .bonus-box strong {
+      color: #1a5a3a;
+      font-size: 1.1rem;
+    }
+    .bonus-box .big-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2a7a4a;
+    }
+
+    .ref-link-box {
+      background: #f0f4fa;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 10px 0;
+      border: 1px dashed #4a7a9a;
+      word-break: break-all;
+    }
+    .ref-link-box code {
+      background: white;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      display: block;
+      margin: 6px 0;
+    }
+
+    .service-box {
+      background: #e8f0f5;
+      border: 2px solid #7a9eb3;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin: 8px 0;
+    }
+    .service-box strong {
+      color: #1a4a5a;
+    }
+
+    .photo-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    .photo-grid img {
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid #d0c5b8;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: #5b4f44;
+      background: #efe8e1;
+      padding: 12px 16px;
+      border-radius: 40px;
+      text-align: center;
+    }
+
+    /* Стили для реферальной ссылки */
+    .copy-btn {
+      background: #1e2e3e;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: 0.2s;
+      margin-top: 6px;
+    }
+    .copy-btn:active {
+      transform: scale(0.95);
+    }
+    .copy-btn.copied {
+      background: #2a7a4a;
+    }
+
+    @media (max-width: 480px) {
+      .app { padding: 12px 8px 20px; }
+      .header-top h1 { font-size: 1.2rem; }
+      .tab-btn { font-size: 0.65rem; padding: 6px 8px; min-width: 44px; }
+      .card { padding: 12px 10px; }
+      .card h3 { font-size: 0.95rem; }
+      .badge-contacts { font-size: 0.75rem; padding: 8px 10px; }
+      .badge-contacts span { font-size: 0.7rem; padding: 2px 10px; }
+      .offer-box .big { font-size: 1.2rem; }
+      .photo-grid img { max-width: 130px; }
+      .script-box p { font-size: 0.82rem; }
+      li { font-size: 0.82rem; }
+      .fragrance-card strong { font-size: 0.9rem; }
+      .bonus-box .big-number { font-size: 1.5rem; }
+    }
+
+    @media (max-width: 380px) {
+      .tab-btn { font-size: 0.55rem; padding: 5px 6px; min-width: 38px; }
+      .header-top h1 { font-size: 1rem; }
+      .lang-btn { font-size: 0.7rem; padding: 4px 10px; }
+    }
+  </style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ====== ШАПКА ====== -->
+  <div class="header-top">
+    <h1>
+      📋 Стандарт работы
+      <small>менеджер парфюм</small>
+    </h1>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="ru" id="langRu">🇷🇺 RU</button>
+      <button class="lang-btn" data-lang="kz" id="langKz">🇰🇿 KZ</button>
+    </div>
+  </div>
+
+  <!-- Контакты + время работы -->
+  <div class="badge-contacts">
+    <span>📞 <a href="tel:+77067254958">+7 706 725 4958</a></span>
+    <span>📞 <a href="tel:+77066800571">+7 706 680 0571</a></span>
+    <span class="work-time">⏰ 11:00 – 23:00</span>
+    <span class="work-time-kz">⏰ 11:00 – 23:00</span>
+  </div>
+
+  <!-- ====== ВКЛАДКИ ====== -->
+  <div class="tabs" id="tabHeaders">
+    <button class="tab-btn active" data-tab="tab1">📖 Обучение</button>
+    <button class="tab-btn" data-tab="tab2">📈 KPI + скрипты</button>
+    <button class="tab-btn" data-tab="tab3">🎯 Подбор</button>
+    <button class="tab-btn" data-tab="tab4">⚡ Быстрый подбор</button>
+    <button class="tab-btn" data-tab="tab5">📚 База знаний</button>
+    <button class="tab-btn" data-tab="tab6">🛡 Возражения</button>
+    <button class="tab-btn" data-tab="tab7">🎁 Наборы + допы</button>
+    <button class="tab-btn" data-tab="tab8">🌟 Рефералка</button>
+    <button class="tab-btn" data-tab="tab9">📦 Документы</button>
+    <button class="tab-btn" data-tab="tab10">🖼 Фото</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ====== ВКЛАДКА 1: ОБУЧЕНИЕ ====== -->
+  <div id="tab1" class="tab-content">
+    <div class="card">
+      <h3>👨‍🏫 День 1 – для новичка <span>база</span></h3>
+      <div class="lang-ru">
+        <ol>
+          <li><strong>Знакомство с продуктом</strong> – выучить <em>шпаргалку ароматов</em> (вкладка «База знаний»).</li>
+          <li><strong>Установка приложений</strong> – WhatsApp, Kaspi Business (просмотр выписок).</li>
+          <li><strong>Настройка быстрых ответов</strong> – готовые шаблоны приветствия и возражений.</li>
+          <li><strong>Практика:</strong> 5 пробных диалогов (ролевая игра с наставником).</li>
+          <li><strong>Фиксация заказа</strong> – внести тестовую продажу в Google-таблицу.</li>
+        </ol>
+      </div>
+      <div class="lang-kz" style="display:none;">
+        <ol>
+          <li><strong>Өніммен танысу</strong> – иістердің <em>шпаргалкасын</em> жаттау («База знаний» беті).</li>
+          <li><strong>Қосымшаларды орнату</strong> – WhatsApp, Kaspi Business (үзінділерді қарау).</li>
+          <li><strong>Жылдам жауаптарды орнату</strong> – сәлемдесу және қарсылықтарға дайын үлгілер.</li>
+          <li><strong>Практика:</strong> 5 сынақ диалог (жаттықтырушымен рөлдік ойын).</li>
+          <li><strong>Тапсырысты тіркеу</strong> – сынақ сатуды Google-кестеге енгізу.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📌 День 2–3 – наработка профессионализма</h3>
+      <div class="lang-ru">
+        <ul>
+          <li>✅ Скорость ответа < 15 мин (установить уведомления).</li>
+          <li>✅ Использовать <strong>скрипты</strong> на русском и казахском.</li>
+          <li>✅ Предлагать <strong>наборы (от 6 ароматов)</strong> – увеличиваем средний чек.</li>
+          <li>✅ После отправки – запрос <strong>отзыва</strong> (фото/текст).</li>
+          <li>✅ Ежедневная сверка с Kaspi Business.</li>
+        </ul>
+      </div>
+      <div class="lang-kz" style="display:none;">
+        <ul>
+          <li>✅ Жауап жылдамдығы < 15 мин (хабарландыруларды орнату).</li>
+          <li>✅ Орыс және қазақ тілдеріндегі <strong>скрипттерді</strong> пайдалану.</li>
+          <li>✅ <strong>Жинақтарды (6 иістен)</strong> ұсыну – орташа чекті арттырамыз.</li>
+          <li>✅ Жібергеннен кейін – <strong>пікір</strong> сұрау (фото/мәтін).</li>
+          <li>✅ Kaspi Business-пен күнделікті салыстыру.</li>
+        </ul>
+      </div>
+      <div class="accent-bg" style="margin-top:8px;">
+        ⭐ <span class="lang-ru"><strong>Конверсия:</strong> минимум 25% от диалогов → продажа.</span>
+        <span class="lang-kz" style="display:none;"><strong>Конверсия:</strong> диалогтардың кемінде 25% → сату.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 2: KPI + СКРИПТЫ ====== -->
+  <div id="tab2" class="tab-content hidden">
+    <div class="card">
+      <h3>🎯 KPI продавца</h3>
+      <div class="lang-ru">
+        <ul>
+          <li><strong>Скорость ответа:</strong> ≤ 15 мин (рабочее время).</li>
+          <li><strong>Конверсия:</strong> от 25% диалогов → заказ.</li>
+          <li><strong>Средний чек:</strong> стимулируем наборы (≥6 ароматов).</li>
+          <li><strong>Отзывы:</strong> минимум 30% заказов с обратной связью.</li>
+          <li><strong>Работа с возражениями:</strong> закрыть сомнения → продажа.</li>
+          <li><strong>Допродажи (Up-Sell):</strong> после набора предлагать полный флакон.</li>
+        </ul>
+      </div>
+      <div class="lang-kz" style="display:none;">
+        <ul>
+          <li><strong>Жауап жылдамдығы:</strong> ≤ 15 мин (жұмыс уақыты).</li>
+          <li><strong>Конверсия:</strong> диалогтардың 25%-ынан → тапсырыс.</li>
+          <li><strong>Орташа чек:</strong> жинақтарды ынталандыру (≥6 иіс).</li>
+          <li><strong>Пікірлер:</strong> тапсырыстардың кемінде 30% кері байланыспен.</li>
+          <li><strong>Қарсылықтармен жұмыс:</strong> күмәнді жабу → сату.</li>
+          <li><strong>Қосымша сату (Up-Sell):</strong> жинақтан кейін толық флакон ұсыну.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💬 Скрипт продаж (RU / KZ)</h3>
+      <div class="script-box">
+        <strong>👋 Приветствие / Сәлемдесу</strong>
+        <p><span class="lang-ru"><strong>RU:</strong> Здравствуйте! Я помогу подобрать аромат. Что ближе: свежесть, цветы или что-то статусное?</span>
+        <span class="lang-kz" style="display:none;"><strong>KZ:</strong> Сәлеметсіз бе! Иіссу таңдауға көмектесемін. Сізге не ұнайды: сергек, гүлді әлде салтанатты иістер ме?</span></p>
+      </div>
+      <div class="script-box">
+        <strong>🎁 Предложение набора / Жинақ ұсыну</strong>
+        <p><span class="lang-ru"><strong>RU:</strong> У нас есть отличный набор из 6 ароматов по 5 мл — идеальный способ познакомиться с коллекцией. Стоимость 14 990 ₸. В подарок — феромоны!</span>
+        <span class="lang-kz" style="display:none;"><strong>KZ:</strong> Бізде 6 иістен тұратын 5 мл-ден керемет жинақ бар — коллекциямен танысудың тамаша тәсілі. Бағасы 14 990 ₸. Сыйлық ретінде — феромондар!</span></p>
+      </div>
+      <div class="script-box">
+        <strong>⬆️ Допродажа (Up-Sell) / Қосымша сату</strong>
+        <p><span class="lang-ru"><strong>RU:</strong> Если вам понравится какой-то аромат, можете заказать полный флакон 100 мл со скидкой!</span>
+        <span class="lang-kz" style="display:none;"><strong>KZ:</strong> Егер сізге қандай да бір иіс ұнаса, 100 мл толық флаконды жеңілдікпен тапсырыс бере аласыз!</span></p>
+      </div>
+      <div class="script-box">
+        <strong>🌟 Реферальная ссылка / Рефералды сілтеме</strong>
+        <p><span class="lang-ru"><strong>RU:</strong> Я отправлю вам реферальную ссылку. По ней вы будете получать бонусы — 1 бонус = 1% скидки!</span>
+        <span class="lang-kz" style="display:none;"><strong>KZ:</strong> Мен сізге рефералды сілтеме жіберемін. Ол арқылы сіз бонустар аласыз — 1 бонус = 1% жеңілдік!</span></p>
+      </div>
+      <div class="script-box">
+        <strong>📦 Завершение / Аяқтау</strong>
+        <p><span class="lang-ru"><strong>RU:</strong> Оформляем доставку через InDriver или Казпочту?</span>
+        <span class="lang-kz" style="display:none;"><strong>KZ:</strong> InDriver немесе Қазпошта арқылы ресімдейміз бе?</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 3: ПОДБОР АРОМАТА ====== -->
+  <div id="tab3" class="tab-content hidden">
+    <div class="card">
+      <h3>🎯 Как правильно подобрать аромат / Иісті қалай дұрыс таңдауға болады</h3>
+      <div class="lang-ru">
+        <p style="margin-bottom:10px;">Чтобы подобрать идеальный аромат, сначала уточните несколько важных деталей:</p>
+        <ol>
+          <li><strong>Для мужчины или женщины?</strong> — Это поможет сузить выбор.</li>
+          <li><strong>Какие ароматы нравятся?</strong> — Сладкие, свежие, цветочные, древесные, восточные.</li>
+          <li><strong>Для повседневного использования или на особый случай?</strong></li>
+        </ol>
+      </div>
+      <div class="lang-kz" style="display:none;">
+        <p style="margin-bottom:10px;">Идеал иіс таңдау үшін алдымен бірнеше маңызды сұрақтарды нақтылаңыз:</p>
+        <ol>
+          <li><strong>Ер адамға әлде әйел адамға?</strong> — Бұл таңдауды тарылтуға көмектеседі.</li>
+          <li><strong>Қандай иістер ұнайды?</strong> — Тәтті, сергек, гүлді, ағашты, шығыстық.</li>
+          <li><strong>Күнделікті қолдануға әлде ерекше жағдайға ма?</strong></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💡 Предложите 2–3 варианта / 2–3 нұсқа ұсыныңыз</h3>
+      <div class="lang-ru">
+        <p>На основе ответов предложите 2–3 наиболее подходящих аромата из каталога.</p>
+      </div>
+      <div class="lang-kz" style="display:none;">
+        <p>Жауаптар негізінде каталогтан ең қолайлы 2–3 иісті ұсыныңыз.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📋 Пример предложения / Ұсыныс үлгісі</h3>
+      <div class="fragrance-card" style="margin-bottom:8px;">
+        <strong>Chloé Eau de Parfum</strong>
+        <div class="notes">🌷 Цветочный / Гүлді</div>
+        <div class="lang-ru">Нежный и женственный аромат с нотами розы и пиона. Идеален для повседневного использования.</div>
+        <div class="lang-kz" style="display:none;">Раушан мен пион ноталары бар нәзік және әйелдік иіс. Күнделікті қолдануға өте ыңғайлы.</div>
+      </div>
+      <div class="fragrance-card" style="margin-bottom:8px;">
+        <strong>Acqua di Giò Profumo</strong>
+        <div class="notes">🌊 Свежий / Древесный — Сергек / Ағашты</div>
+        <div class="lang-ru">Свежий и мужественный аромат с морскими нотами и древесным шлейфом.</div>
+        <div class="lang-kz" style="display:none;">Теңіз ноталары мен ағаш ізі бар сергек және еркекше иіс.</div>
+      </div>
+      <div class="fragrance-card">
+        <strong>Tom Ford Lost Cherry</strong>
+        <div class="notes">🍒 Восточный / Сладкий — Шығыстық / Тәтті</div>
+        <div class="lang-ru">Яркий и соблазнительный аромат с нотами вишни и миндаля. Для особых случаев.</div>
+        <div class="lang-kz" style="display:none;">Шие мен бадам ноталары бар жарқын және қызықты иіс. Ерекше жағдайларға арналған.</div>
+      </div>
+      <div style="margin-top:10px; background:#e8e0d7; border-radius:14px; padding:10px 14px;">
+        💡 <span class="lang-ru"><strong>Совет:</strong> Учитывайте сезон, настроение и стиль клиента.</span>
+        <span class="lang-kz" style="display:none;"><strong>Кеңес:</strong> Клиенттің маусымын, көңіл-күйін және стилін ескеріңіз.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 4: БЫСТРЫЙ ПОДБОР ====== -->
+  <div id="tab4" class="tab-content hidden">
+    <div class="card">
+      <h3>⚡ Правила быстрого подбора / Жылдам таңдау ережелері</h3>
+
+      <div style="margin-bottom:12px;">
+        <h4>🌸 <span class="lang-ru">На каждый день</span><span class="lang-kz" style="display:none;">Күнделікті</span></h4>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          <span class="pill">LACOSTE POUR FEMME</span>
+          <span class="pill">VALAYA</span>
+          <span class="pill">WOOD SAGE & SEA SALT</span>
+          <span class="pill">DELINA</span>
+          <span class="pill">N°4 APRES L'AMOUR</span>
+          <span class="pill">ANDROMEDA</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <h4>🎁 <span class="lang-ru">На подарок</span><span class="lang-kz" style="display:none;">Сыйлыққа</span></h4>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          <span class="pill">MISS DIOR</span>
+          <span class="pill">DELINA</span>
+          <span class="pill">LACOSTE POUR FEMME</span>
+          <span class="pill">GANYMEDE</span>
+          <span class="pill">SYMPHONY</span>
+          <span class="pill">ROJA</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <h4>🍬 <span class="lang-ru">Сладкие</span><span class="lang-kz" style="display:none;">Тәтті</span></h4>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          <span class="pill">ANDROMEDA</span>
+          <span class="pill">DELINA</span>
+          <span class="pill">VALAYA</span>
+          <span class="pill">WOOD SAGE & SEA SALT</span>
+          <span class="pill">ROJA</span>
+          <span class="pill">SYMPHONY</span>
+          <span class="pill">GANYMEDE</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <h4>🌿 <span class="lang-ru">Свежие</span><span class="lang-kz" style="display:none;">Сергек</span></h4>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          <span class="pill">ANDROMEDA</span>
+          <span class="pill">DELINA</span>
+          <span class="pill">VALAYA</span>
+          <span class="pill">WOOD SAGE & SEA SALT</span>
+          <span class="pill">ROJA</span>
+          <span class="pill">SYMPHONY</span>
+          <span class="pill">GANYMEDE</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <h4>🌲 <span class="lang-ru">Древесные</span><span class="lang-kz" style="display:none;">Ағашты</span></h4>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          <span class="pill">ANDROMEDA</span>
+          <span class="pill">DELINA</span>
+          <span class="pill">VALAYA</span>
+          <span class="pill">WOOD SAGE & SEA SALT</span>
+          <span class="pill">ROJA</span>
+          <span class="pill">SYMPHONY</span>
+          <span class="pill">GANYMEDE</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <h4>❤️ <span class="lang-ru">Для свиданий</span><span class="lang-kz" style="display:none;">Кездесулерге</span></h4>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          <span class="pill">N°4 APRES L'AMOUR</span>
+          <span class="pill">ANDROMEDA</span>
+          <span class="pill">SYMPHONY</span>
+          <span class="pill">ROJA</span>
+          <span class="pill">GANYMEDE</span>
+        </div>
+      </div>
+
+      <div>
+        <h4>👑 <span class="lang-ru">Дорогое и статусное</span><span class="lang-kz" style="display:none;">Қымбат және мәртебелі</span></h4>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          <span class="pill">GANYMEDE</span>
+          <span class="pill">SYMPHONY</span>
+          <span class="pill">ROJA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 5: БАЗА ЗНАНИЙ ====== -->
+  <div id="tab5" class="tab-content hidden">
+    <div class="card">
+      <h3>📚 База знаний по ароматам / Иістер бойынша білім базасы</h3>
+      <div class="grid-2">
+        <div class="fragrance-card">
+          <strong>Ganymede</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Ганиме́д]</span>
+          <div class="notes">🍊 Мандарин, шафран, фиалка, бессмертник</div>
+          <div class="for">👤 Уверенным в себе, ценителям футуристичных ароматов</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>Lacoste Pour Femme</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Лако́ст Пур Фам]</span>
+          <div class="notes">🌷 Фрезия, перец, жасмин, роза, кедр</div>
+          <div class="for">👩 Элегантным женщинам, на каждый день и в офис</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>Symphony</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Симфо́ни]</span>
+          <div class="notes">🍇 Грейпфрут, имбирь, личи</div>
+          <div class="for">✨ Ярким личностям, любителям роскошных ароматов</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>Andromeda</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Андроме́да]</span>
+          <div class="notes">🍑 Персик, кокос, цветок хлопка, амбра</div>
+          <div class="for">🍬 Поклонникам сладких, восточных, шлейфовых ароматов</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>Delina</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Делина́]</span>
+          <div class="notes">🌹 Личи, ревень, пион, турецкая роза</div>
+          <div class="for">🌺 Романтичным девушкам, любителям цветочных ароматов</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>Cedrus</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Се́друс]</span>
+          <div class="notes">🌲 Кедр, древесные ноты, ветвиер</div>
+          <div class="for">🌳 Любителям спокойных, натуральных, древесных композиций</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>Valaya</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Вала́йя]</span>
+          <div class="notes">🧼 Альдегиды, белый мускус, апельсиновый цвет</div>
+          <div class="for">🧴 Любителям чистоты, свежести и дорогого ухода</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>N°4 Après l'Amour</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Номер 4 Апре́ ляму́р]</span>
+          <div class="notes">🍋 Лимонная цедра, амбра, мускус</div>
+          <div class="for">🌙 Любителям стойких, ярких, вечерних ароматов</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>Wood Sage & Sea Salt</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Вуд Сэйдж энд Си Солт]</span>
+          <div class="notes">🌊 Морская соль, шалфей, грейпфрут</div>
+          <div class="for">🌅 Поклонникам легких, свежих, морских ароматов</div>
+        </div>
+        <div class="fragrance-card">
+          <strong>Miss Dior Blooming Bouquet</strong> <span style="font-size:0.75rem; color:#5f4f3f;">[Мисс Дио́р]</span>
+          <div class="notes">💐 Роза, пион, белый мускус</div>
+          <div class="for">🎀 Нежным девушкам, универсальный подарок</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 6: ВОЗРАЖЕНИЯ ====== -->
+  <div id="tab6" class="tab-content hidden">
+    <div class="card">
+      <h3>🛡 Работа с возражениями / Қарсылықтармен жұмыс</h3>
+
+      <div class="grid-2">
+        <div class="script-box" style="border-left-color:#b8860b;">
+          <strong>💳 <span class="lang-ru">Оплата после получения (Казпочта)</span><span class="lang-kz" style="display:none;">Алғаннан кейін төлем (Қазпошта)</span></strong>
+          <p><span class="lang-ru"><strong>RU:</strong> Мы отправляем наложенным платежом через Казпочту. Вы оплачиваете при получении.</span>
+          <span class="lang-kz" style="display:none;"><strong>KZ:</strong> Біз Қазпошта арқылы қолма-қол төлеммен жібереміз. Сіз алған кезде төлейсіз.</span></p>
+        </div>
+
+        <div class="script-box" style="border-left-color:#1a7a5a;">
+          <strong>💰 <span class="lang-ru">Предоплата 20%</span><span class="lang-kz" style="display:none;">20% алдын ала төлем</span></strong>
+          <p><span class="lang-ru"><strong>RU:</strong> Для заказов от 20 000 ₸ мы просим предоплату 20%. Остальное при получении.</span>
+          <span class="lang-kz" style="display:none;"><strong>KZ:</strong> 20 000 ₸-ден бастап тапсырыстар үшін 20% алдын ала төлем сұраймыз. Қалғанын алған кезде.</span></p>
+        </div>
+
+        <div class="script-box" style="border-left-color:#2a6a9a;">
+          <strong>🏦 <span class="lang-ru">Kaspi / Перевод</span><span class="lang-kz" style="display:none;">Kaspi / Аударым</span></strong>
+          <p><span class="lang-ru"><strong>RU:</strong> Можете оплатить через Kaspi Gold или Kaspi Red по номеру телефона.</span>
+          <span class="lang-kz" style="display:none;"><strong>KZ:</strong> Kaspi Gold немесе Kaspi Red арқылы телефон нөмірі бойынша төлей аласыз.</span></p>
+        </div>
+
+        <div class="script-box" style="border-left-color:#8a4a2a;">
+          <strong>📦 <span class="lang-ru">Доставка InDriver</span><span class="lang-kz" style="display:none;">InDriver жеткізу</span></strong>
+          <p><span class="lang-ru"><strong>RU:</strong> Отправляем InDriver по городу. Оплата при получении курьеру.</span>
+          <span class="lang-kz" style="display:none;"><strong>KZ:</strong> InDriver арқылы қала бойынша жібереміз. Төлем курьерге алған кезде.</span></p>
+        </div>
+      </div>
+
+      <div class="accent-bg" style="margin-top:10px;">
+        <strong><span class="lang-ru">🔑 Главное правило:</span><span class="lang-kz" style="display:none;">🔑 Басты ереже:</span></strong>
+        <span class="lang-ru">Всегда предлагайте удобный вариант оплаты. Клиент должен чувствовать себя в безопасности.</span>
+        <span class="lang-kz" style="display:none;">Әрқашан ыңғайлы төлем нұсқасын ұсыныңыз. Клиент өзін қауіпсіз сезінуі керек.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🗣 <span class="lang-ru">Типичные вопросы и ответы</span><span class="lang-kz" style="display:none;">Типтік сұрақтар мен жауаптар</span></h3>
+      <div class="grid-2">
+        <div><strong><span class="lang-ru">Вы мошенники?</span><span class="lang-kz" style="display:none;">Сіз алаяқсыз ба?</span></strong><br>
+          <span class="lang-ru">Мы работаем открыто, отправляем трек-коды.</span>
+          <span class="lang-kz" style="display:none;">Біз ашық жұмыс істейміз, трек-кодтарды жібереміз.</span></div>
+        <div><strong><span class="lang-ru">Почему так дёшево?</span><span class="lang-kz" style="display:none;">Неге арзан?</span></strong><br>
+          <span class="lang-ru">Без наценок за аренду и посредников.</span>
+          <span class="lang-kz" style="display:none;">Делдалсыз, сауда орталықтарының жалдау ақысыз.</span></div>
+        <div><strong><span class="lang-ru">Аромат не стойкий?</span><span class="lang-kz" style="display:none;">Иіс тұрақты емес пе?</span></strong><br>
+          <span class="lang-ru">Это премиум качество. Начните с миниатюры.</span>
+          <span class="lang-kz" style="display:none;">Бұл премиум сапа. Алдымен сынамадан бастаңыз.</span></div>
+        <div><strong><span class="lang-ru">Можно ли вернуть?</span><span class="lang-kz" style="display:none;">Қайтаруға бола ма?</span></strong><br>
+          <span class="lang-ru">Да, если аромат не подошёл — обменяем.</span>
+          <span class="lang-kz" style="display:none;">Иә, иіс жарамаса — ауыстырамыз.</span></div>
+        <div><strong><span class="lang-ru">Есть ли сертификаты?</span><span class="lang-kz" style="display:none;">Сертификаттар бар ма?</span></strong><br>
+          <span class="lang-ru">Да, все документы есть. Можем отправить фото.</span>
+          <span class="lang-kz" style="display:none;">Иә, барлық құжаттар бар. Фото жібере аламыз.</span></div>
+        <div><strong><span class="lang-ru">Можно отсрочку?</span><span class="lang-kz" style="display:none;">Кейінге төлемге болады ма?</span></strong><br>
+          <span class="lang-ru">Для постоянных клиентов — обсуждаем индивидуально.</span>
+          <span class="lang-kz" style="display:none;">Тұрақты клиенттер үшін — жеке талқылаймыз.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 7: НАБОРЫ + ДОПЫ ====== -->
+  <div id="tab7" class="tab-content hidden">
+    <div class="card">
+      <h3>🎁 Наборы / Жинақтар</h3>
+      <div class="offer-box">
+        <div class="big">6 ароматов по 5 мл</div>
+        <div class="big">14 990 ₸</div>
+        <div class="small"><span class="lang-ru">Идеальный способ познакомиться с коллекцией</span><span class="lang-kz" style="display:none;">Коллекциямен танысудың тамаша тәсілі</span></div>
+      </div>
+
+      <div class="gift-box">
+        <strong>🎁 <span class="lang-ru">Подарок — феромоны!</span><span class="lang-kz" style="display:none;">Сыйлық — феромондар!</span></strong>
+        <div class="lang-ru">При заказе набора — феромоны в подарок бесплатно!</div>
+        <div class="lang-kz" style="display:none;">Жинақты тапсырыс бергенде — феромондар сыйлық ретінде тегін!</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>⬆️ Допродажа (Up-Sell) / Қосымша сату</h3>
+      <div class="lang-ru">
+        <p><strong>После того, как клиент заказал набор — предложите полный флакон 100 мл:</strong></p>
+        <ul>
+          <li>«Если вам понравится какой-то аромат, можете заказать полный флакон 100 мл со скидкой!»</li>
+          <li>«У нас есть все ароматы из набора в полноразмерных флаконах.»</li>
+        </ul>
+      </div>
+      <div class="lang-kz" style="display:none;">
+        <p><strong>Клиент жинақты тапсырыс бергеннен кейін — толық 100 мл флаконды ұсыныңыз:</strong></p>
+        <ul>
+          <li>«Егер сізге қандай да бір иіс ұнаса, 100 мл толық флаконды жеңілдікпен тапсырыс бере аласыз!»</li>
+          <li>«Бізде жинақтағы барлық иістер толық флакондарда бар.»</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎀 <span class="lang-ru">Дополнительные услуги</span><span class="lang-kz" style="display:none;">Қосымша қызметтер</span></h3>
+
+      <div class="service-box">
+        <strong>🎁 <span class="lang-ru">Упаковка «На подарок»</span><span class="lang-kz" style="display:none;">«Сыйлыққа» орау</span></strong>
+        <div class="lang-ru">Красивая подарочная упаковка — <strong>2 500 ₸</strong></div>
+        <div class="lang-kz" style="display:none;">Әдемі сыйлық орау — <strong>2 500 ₸</strong></div>
+      </div>
+
+      <div class="service-box" style="border-color:#d4a84b; background:#fdf6ed;">
+        <strong>🧴 <span class="lang-ru">Подарочные флаконы 5 мл</span><span class="lang-kz" style="display:none;">Сыйлық флакондары 5 мл</span></strong>
+        <div class="lang-ru">Отдельные флаконы 5 мл в подарочной упаковке — <strong>индивидуальный расчёт</strong></div>
+        <div class="lang-kz" style="display:none;">Сыйлық орауындағы жеке 5 мл флакондар — <strong>жеке есептеу</strong></div>
+      </div>
+
+      <div class="service-box" style="border-color:#7a9eb3; background:#eef4f7;">
+        <strong>📦 <span class="lang-ru">Комплект «Набор + полный флакон»</span><span class="lang-kz" style="display:none;">«Жинақ + толық флакон» жиынтығы</span></strong>
+        <div class="lang-ru">Набор 6×5 мл + полный флакон 100 мл — <strong>особая цена</strong></div>
+        <div class="lang-kz" style="display:none;">6×5 мл жинақ + 100 мл толық флакон — <strong>ерекше баға</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 8: РЕФЕРАЛЬНАЯ СИСТЕМА ====== -->
+  <div id="tab8" class="tab-content hidden">
+    <div class="card">
+      <h3>🌟 Реферальная система / Рефералды жүйе</h3>
+
+      <div class="bonus-box">
+        <strong>🎯 <span class="lang-ru">Как это работает?</span><span class="lang-kz" style="display:none;">Бұл қалай жұмыс істейді?</span></strong>
+        <div class="lang-ru">
+          <ol style="margin-top:8px;">
+            <li><strong>Клиент делает заказ</strong> — вы присваиваете ему <strong>реферальный код</strong> = последние 4 цифры номера чека.</li>
+            <li><strong>Клиент получает ссылку</strong> — вы отправляете ему персональную ссылку для заказа.</li>
+            <li><strong>Бонусы накапливаются</strong> — за каждый заказ по ссылке клиент получает <strong>1 бонус = 1% скидка</strong>.</li>
+            <li><strong>Скидка применяется</strong> — при следующем заказе клиент использует накопленные бонусы.</li>
+          </ol>
+        </div>
+        <div class="lang-kz" style="display:none;">
+          <ol style="margin-top:8px;">
+            <li><strong>Клиент тапсырыс береді</strong> — сіз оған <strong>рефералды код</strong> бересіз = чек нөмірінің соңғы 4 цифры.</li>
+            <li><strong>Клиент сілтеме алады</strong> — сіз оған тапсырыс беруге жеке сілтеме жібересіз.</li>
+            <li><strong>Бонустар жиналады</strong> — сілтеме бойынша әрбір тапсырыс үшін клиент <strong>1 бонус = 1% жеңілдік</strong> алады.</li>
+            <li><strong>Жеңілдік қолданылады</strong> — келесі тапсырыс кезінде клиент жиналған бонустарды пайдаланады.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="bonus-box" style="border-color:#d4a84b; background:#fdf6ed;">
+        <strong>📊 <span class="lang-ru">Пример накопления бонусов</span><span class="lang-kz" style="display:none;">Бонустарды жинау мысалы</span></strong>
+        <div class="lang-ru">
+          <ul style="margin-top:6px;">
+            <li>📌 Клиент сделал заказ на <strong>14 990 ₸</strong> → получил <strong>1 бонус</strong></li>
+            <li>📌 Следующий заказ на <strong>14 990 ₸</strong> → скидка <strong>1% = 149 ₸</strong></li>
+            <li>📌 После 5 заказов → <strong>5 бонусов = 5% скидка</strong></li>
+            <li>📌 После 10 заказов → <strong>10 бонусов = 10% скидка</strong></li>
+          </ul>
+        </div>
+        <div class="lang-kz" style="display:none;">
+          <ul style="margin-top:6px;">
+            <li>📌 Клиент <strong>14 990 ₸</strong> тапсырыс берді → <strong>1 бонус</strong> алды</li>
+            <li>📌 Келесі тапсырыс <strong>14 990 ₸</strong> → <strong>1% = 149 ₸</strong> жеңілдік</li>
+            <li>📌 5 тапсырыстан кейін → <strong>5 бонус = 5% жеңілдік</strong></li>
+            <li>📌 10 тапсырыстан кейін → <strong>10 бонус = 10% жеңілдік</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔗 <span class="lang-ru">Как создать реферальную ссылку</span><span class="lang-kz" style="display:none;">Рефералды сілтемені қалай жасауға болады</span></h3>
+
+      <div class="lang-ru">
+        <ol>
+          <li><strong>Получите номер чека</strong> — после оформления заказа у вас есть номер чека (например, <code>#12345</code>).</li>
+          <li><strong>Возьмите последние 4 цифры</strong> — из номера <code>#12345</code> берём <code>2345</code> — это реферальный код клиента.</li>
+          <li><strong>Сформируйте ссылку</strong> — вставьте код в ссылку:</li>
+        </ol>
+      </div>
+      <div class="lang-kz" style="display:none;">
+        <ol>
+          <li><strong>Чек нөмірін алыңыз</strong> — тапсырысты ресімдегеннен кейін чек нөмірі бар (мысалы, <code>#12345</code>).</li>
+          <li><strong>Соңғы 4 цифрды алыңыз</strong> — <code>#12345</code> нөмірінен <code>2345</code> аламыз — бұл клиенттің рефералды коды.</li>
+          <li><strong>Сілтемені құрастырыңыз</strong> — кодты сілтемеге қойыңыз:</li>
+        </ol>
+      </div>
+
+      <div class="ref-link-box">
+        <strong>📱 <span class="lang-ru">Ссылка для клиента:</span><span class="lang-kz" style="display:none;">Клиентке арналған сілтеме:</span></strong>
+        <code id="refLink">https://wa.me/77067254958?text=Здравствуйте!%20Хочу%20заказать%20по%20реферальной%20ссылке.%20Мой%20код%3A%20[КОД]</code>
+        <button class="copy-btn" id="copyRefBtn" onclick="copyRefLink()">
+          <span class="lang-ru">📋 Копировать ссылку</span>
+          <span class="lang-kz" style="display:none;">📋 Сілтемені көшіру</span>
+        </button>
+      </div>
+
+      <div style="background:#f2ece5; border-radius:14px; padding:12px 14px; margin-top:8px;">
+        <strong>📝 <span class="lang-ru">Инструкция для продавца:</span><span class="lang-kz" style="display:none;">Сатушыға арналған нұсқау:</span></strong>
+        <div class="lang-ru">
+          <ol style="margin-top:4px;">
+            <li>После оформления заказа возьмите <strong>последние 4 цифры номера чека</strong>.</li>
+            <li>Замените <code>[КОД]</code> в ссылке выше на эти цифры.</li>
+            <li>Отправьте готовую ссылку клиенту в WhatsApp.</li>
+            <li>При следующем заказе клиент переходит по ссылке и получает <strong>1 бонус = 1% скидка</strong>.</li>
+          </ol>
+        </div>
+        <div class="lang-kz" style="display:none;">
+          <ol style="margin-top:4px;">
+            <li>Тапсырысты ресімдегеннен кейін <strong>чек нөмірінің соңғы 4 цифрын</strong> алыңыз.</li>
+            <li>Жоғарыдағы сілтемедегі <code>[КОД]</code> орнына осы цифрларды қойыңыз.</li>
+            <li>Дайын сілтемені клиентке WhatsApp арқылы жіберіңіз.</li>
+            <li>Келесі тапсырыс кезінде клиент сілтеме бойынша өтеді және <strong>1 бонус = 1% жеңілдік</strong> алады.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📋 <span class="lang-ru">Пример диалога с клиентом</span><span class="lang-kz" style="display:none;">Клиентпен диалог үлгісі</span></h3>
+      <div class="script-box" style="border-left-color:#2a7a4a;">
+        <strong>💬 <span class="lang-ru">Продавец → Клиенту</span><span class="lang-kz" style="display:none;">Сатушы → Клиентке</span></strong>
+        <p><span class="lang-ru"><strong>RU:</strong> Спасибо за заказ! 🎉 Я присваиваю вам реферальный код <strong>[2345]</strong> — это последние 4 цифры вашего чека.</span>
+        <span class="lang-kz" style="display:none;"><strong>KZ:</strong> Тапсырыс үшін рахмет! 🎉 Мен сізге рефералды код <strong>[2345]</strong> беремін — бұл чекіңіздің соңғы 4 цифры.</span></p>
+        <p style="margin-top:4px;"><span class="lang-ru">Отправляю ссылку для заказа. По ней вы будете получать <strong>1 бонус = 1% скидки</strong> на каждый следующий заказ! 🌟</span>
+        <span class="lang-kz" style="display:none;">Тапсырыс беруге сілтеме жіберемін. Ол бойынша сіз әрбір келесі тапсырысқа <strong>1 бонус = 1% жеңілдік</strong> аласыз! 🌟</span></p>
+        <p style="margin-top:4px; background:white; padding:6px 12px; border-radius:10px; word-break:break-all;">
+          🔗 <span class="lang-ru">Ваша ссылка:</span><span class="lang-kz" style="display:none;">Сіздің сілтемеңіз:</span><br>
+          <code style="font-size:0.8rem;">https://wa.me/77067254958?text=Здравствуйте!%20Хочу%20заказать%20по%20реферальной%20ссылке.%20Мой%20код%3A%202345</code>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 9: ДОКУМЕНТЫ ====== -->
+  <div id="tab9" class="tab-content hidden">
+    <div class="card">
+      <h3>📄 Сертификат / Документация</h3>
+      <div style="background:#f2ede7; border-radius:18px; padding:12px 16px; font-size:0.9rem;">
+        <p><strong>Expediteur:</strong> EXPRESSIONS PARFUMEES SAS, 136 CHEMIN DE SAINT MARC, 06130 GRASSE, France</p>
+        <p><strong>Destinataire:</strong> INTERSAF LLP, Northern Ring Highway, 9/2, ALMATY, Kazakhstan</p>
+        <p><strong>Invoice:</strong> 26.01.00199 от 08/01/2026</p>
+        <p><strong>CO Verification:</strong> <span style="background:#d4c9bd; padding:2px 10px; border-radius:30px;">FR39IGSG113IRH</span></p>
+        <p><span class="pill">✈️</span> Авиадоставка, страна происхождения: EU-France</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📦 <span class="lang-ru">Правила фиксации продаж</span><span class="lang-kz" style="display:none;">Сатуды тіркеу ережелері</span></h3>
+      <ul>
+        <li><span class="lang-ru">Каждый заказ → таблица (Google Sheets): <strong>Дата, Имя, Аромат(ы), Сумма, Доставка, Трек-код, Реферальный код.</strong></span>
+        <span class="lang-kz" style="display:none;">Әрбір тапсырыс → кесте (Google Sheets): <strong>Күні, Аты, Иіс(тер), Сома, Жеткізу, Трек-код, Рефералды код.</strong></span></li>
+        <li><span class="lang-ru">Сверка с <strong>Kaspi Business</strong> – ежедневно.</span>
+        <span class="lang-kz" style="display:none;"><strong>Kaspi Business</strong> – күнделікті салыстыру.</span></li>
+        <li><span class="lang-ru">После отправки – отправить клиенту фото чека/трека.</span>
+        <span class="lang-kz" style="display:none;">Жібергеннен кейін – клиентке чек/трек фотосын жіберу.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ====== ВКЛАДКА 10: ФОТО ====== -->
+  <div id="tab10" class="tab-content hidden">
+    <div class="card">
+      <h3>🖼 <span class="lang-ru">Фотографии продукции и сертификатов</span><span class="lang-kz" style="display:none;">Өнімдер мен сертификаттардың фотосуреттері</span></h3>
+      <p style="color:#5f4f3f; margin-bottom:12px;">
+        <span class="lang-ru">Здесь вы можете разместить реальные фото товара, упаковки или документов.</span>
+        <span class="lang-kz" style="display:none;">Мұнда сіз тауардың, ораудың немесе құжаттардың нақты фотосуреттерін орналастыра аласыз.</span>
+      </p>
+
+      <div class="photo-grid">
+        <img src="https://via.placeholder.com/300x300/F5F0EA/B6A392?text=Фото+1" alt="Фото 1">
+        <img src="https://via.placeholder.com/300x300/F5F0EA/B6A392?text=Фото+2" alt="Фото 2">
+        <img src="https://via.placeholder.com/300x300/F5F0EA/B6A392?text=Фото+3" alt="Фото 3">
+      </div>
+
+      <div style="background:#f2ece5; border-radius:16px; padding:12px 16px; margin-top:8px; font-size:0.85rem;">
+        <strong>📌 <span class="lang-ru">Как добавить свои фото:</span><span class="lang-kz" style="display:none;">Өз фотосуреттеріңізді қалай қосуға болады:</span></strong>
+        <ol style="margin-top:6px;">
+          <li><span class="lang-ru">Замените ссылки <code>src="..."</code> на свои.</span>
+          <span class="lang-kz" style="display:none;"><code>src="..."</code> сілтемелерін өзіңіздікімен ауыстырыңыз.</span></li>
+          <li><span class="lang-ru">Или загрузите картинки на любой хостинг и вставьте ссылки.</span>
+          <span class="lang-kz" style="display:none;">Немесе суреттерді кез келген хостингке жүктеп, сілтемелерді қойыңыз.</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ПОДВАЛ ====== -->
+  <div class="footer-note">
+    📌 СОП утверждён для менеджеров парфюмерии  •  Версия 4.0  •  Контакты: +7 706 725 4958 | +7 706 680 0571
+  </div>
+
+</div>
+
+<!-- ====== JS ДЛЯ ЯЗЫКА, ВКЛАДОК И КОПИРОВАНИЯ ====== -->
+<script>
+  (function() {
+    // ---------- ЯЗЫК ----------
+    const langRu = document.getElementById('langRu');
+    const langKz = document.getElementById('langKz');
+    const ruElements = document.querySelectorAll('.lang-ru');
+    const kzElements = document.querySelectorAll('.lang-kz');
+
+    function setLang(lang) {
+      if (lang === 'ru') {
+        ruElements.forEach(el => el.style.display = '');
+        kzElements.forEach(el => el.style.display = 'none');
+        langRu.classList.add('active');
+        langKz.classList.remove('active');
+      } else {
+        ruElements.forEach(el => el.style.display = 'none');
+        kzElements.forEach(el => el.style.display = '');
+        langKz.classList.add('active');
+        langRu.classList.remove('active');
+      }
+    }
+
+    langRu.addEventListener('click', () => setLang('ru'));
+    langKz.addEventListener('click', () => setLang('kz'));
+
+    // ---------- ВКЛАДКИ ----------
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = {
+      tab1: document.getElementById('tab1'),
+      tab2: document.getElementById('tab2'),
+      tab3: document.getElementById('tab3'),
+      tab4: document.getElementById('tab4'),
+      tab5: document.getElementById('tab5'),
+      tab6: document.getElementById('tab6'),
+      tab7: document.getElementById('tab7'),
+      tab8: document.getElementById('tab8'),
+      tab9: document.getElementById('tab9'),
+      tab10: document.getElementById('tab10')
+    };
+
+    function activateTab(tabId) {
+      Object.keys(contents).forEach(key => {
+        contents[key].classList.add('hidden');
+      });
+      if (contents[tabId]) {
+        contents[tabId].classList.remove('hidden');
+      }
+      tabs.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.tab === tabId) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const tabId = this.dataset.tab;
+        if (tabId) activateTab(tabId);
+      });
+    });
+
+    const activeTab = document.querySelector('.tab-btn.active');
+    if (activeTab) {
+      const id = activeTab.dataset.tab;
+      if (id) activateTab(id);
+    } else {
+      activateTab('tab1');
+    }
+  })();
+
+  // ---------- КОПИРОВАНИЕ РЕФЕРАЛЬНОЙ ССЫЛКИ ----------
+  function copyRefLink() {
+    const linkElement = document.getElementById('refLink');
+    const text = linkElement.textContent;
+    const btn = document.getElementById('copyRefBtn');
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✅ Скопировано!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          const isRu = document.getElementById('langRu').classList.contains('active');
+          btn.textContent = isRu ? '📋 Копировать ссылку' : '📋 Сілтемені көшіру';
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        fallbackCopy(text, btn);
+      });
+    } else {
+      fallbackCopy(text, btn);
+    }
+  }
+
+  function fallbackCopy(text, btn) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      btn.textContent = '✅ Скопировано!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        const isRu = document.getElementById('langRu').classList.contains('active');
+        btn.textContent = isRu ? '📋 Копировать ссылку' : '📋 Сілтемені көшіру';
+        btn.classList.remove('copied');
+      }, 2000);
+    } catch (e) {
+      alert('Не удалось скопировать. Скопируйте ссылку вручную.');
+    }
+    document.body.removeChild(textarea);
+  }
+</script>
+
+</body>
+</html>
